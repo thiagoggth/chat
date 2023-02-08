@@ -1,0 +1,20 @@
+{
+  "transpileOnly": true,
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "target": "es2019",
+    "module": "commonjs",
+    "lib": ["es6", "dom"],
+    "types": ["reflect-metadata"],
+    "outDir": "./dist",
+    "strict": false,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["test/**/*.ts"]
+}
