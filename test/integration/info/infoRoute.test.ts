@@ -7,7 +7,7 @@ describe('Rota - API Info', () => {
   let application: Application;
 
   beforeAll(async () => {
-    application = app.create().server;
+    application = app.createServer().app;
   });
 
   it('Deve retornar informações básicas da api', async () => {

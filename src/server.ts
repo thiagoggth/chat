@@ -3,8 +3,7 @@ import { App } from './App';
 const bootstrap = () => {
   try {
     const app = new App();
-    app.create().start();
-    app.start();
+    app.createServer().start();
   } catch (error) {
     console.log('[App]: ', error);
   }
