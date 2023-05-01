@@ -9,5 +9,6 @@ const env = (envName: string) => {
 };
 
 export default {
-  PORT: Number(requiredEnv('PORT'))
+  PORT: Number(requiredEnv('PORT')),
+  SECRET: 'secret'
 };

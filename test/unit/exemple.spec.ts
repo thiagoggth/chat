@@ -5,13 +5,13 @@ interface IMathService {
 }
 
 class MathService implements IMathService {
-  calcSum(numbers: number[]): number {
+  public calcSum(numbers: number[]): number {
     return numbers.reduce((prevVal, curVal) => prevVal + curVal);
   }
 }
 
 class TestUseCase {
-  constructor(private mathService: IMathService) {}
+  public constructor(private mathService: IMathService) {}
 
   public handle() {
     const result = this.mathService.calcSum([1, 1, 1]);

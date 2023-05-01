@@ -11,7 +11,9 @@
   },
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "@typescript-eslint/explicit-member-accessibility": "error",
     "prettier/prettier": "error",
+    "@typescript-eslint/no-empty-interface": "off",
     "no-useless-constructor": "off",
     "semi": ["error", "always"],
     "space-before-function-paren": [

@@ -1,3 +1,5 @@
+/* eslint-disable no-unmodified-loop-condition */
+import 'reflect-metadata';
 import { App } from './App';
 
 const bootstrap = () => {
