@@ -18,10 +18,10 @@ export abstract class HandleResponse {
     };
   }
 
-  public static notFound(message: string, errors: Report[]): HttpResponse {
+  public static notFound(message: string): HttpResponse {
     return {
       status: HttpStatus.NOT_FOUND,
-      body: new Result(null, message, false, errors)
+      body: new Result(null, message, false, [])
     };
   }
 

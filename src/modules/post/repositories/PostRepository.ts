@@ -15,4 +15,9 @@ export class PostRepository implements IPostRepository {
   public async create(post: Post): Promise<void> {
     await this._repository.save(PostMapper.toSchema(post));
   }
+
+  public async listByChannelId(channelId: string): Promise<PostSchema[]> {
+    const users = this._repository.find({ where: { channelId } });
+    return users;
+  }
 }

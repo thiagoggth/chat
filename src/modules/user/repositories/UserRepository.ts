@@ -12,6 +12,13 @@ export class UserRepository implements IUserRepository {
     this._repository = App.datSource.getRepository(UserSchema);
   }
 
+  public async find(): Promise<UserSchema[]> {
+    const users = await this._repository.find({
+      select: { email: true, emailVerified: true, id: true, name: true }
+    });
+    return users;
+  }
+
   public async create(user: User): Promise<void> {
     await this._repository.save(UserMapper.toSchema(user));
   }
