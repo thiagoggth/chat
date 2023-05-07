@@ -23,4 +23,16 @@ export class ChannelRepository implements IChannelRepository {
     const channelFound = await this._repository.findOneBy({ id: id.value });
     return channelFound ? ChannelMapper.toDomain(channelFound) : undefined;
   }
+
+  public async findByUserId(id: string): Promise<ChannelSchema[]> {
+    const channelsFound = await this._repository.find({
+      select: {
+        members: {
+          email: true
+        }
+      },
+      where: { members: { id } }
+    });
+    return channelsFound;
+  }
 }

@@ -19,9 +19,9 @@ export class BaseEntity {
     return this._id;
   }
 
-  public get createdAt(): Date {
-    return this._createdAt;
-  }
+  // public get createdAt(): Date {
+  //   return this._createdAt;
+  // }
 
   public get updatedAt(): Date {
     return this._updatedAt;
