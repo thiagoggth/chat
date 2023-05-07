@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Input } from '@/components/Input';
@@ -15,10 +16,10 @@ const RegisterTest = () => (
 );
 
 export default function Login() {
-  const [error, setError] = useState<string | undefined>('TESTE');
+  const [error, setError] = useState<string>();
 
   return (
-    <div className="flex items-center justify-center bg-zinc-900 h-screen">
+    <div className="flex items-center justify-center bg-zinc-800 p-2 h-screen">
       <Card>
         <Title>Entrar</Title>
         <Input
