@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { InvalidValuesError } from '../../errors/InvalidValuesError';
 import IValueObject from './IValueObject';
 
 export class Id implements IValueObject {
@@ -12,7 +13,7 @@ export class Id implements IValueObject {
   private validateIsValidUUID(): void {
     const UUID_REGEX =
       /^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[8|9|aA|bB][0-9a-f]{3}-[0-9a-f]{12}$/i;
-    if (!UUID_REGEX.test(this.value)) throw new Error('Invalid id value');
+    if (!UUID_REGEX.test(this.value)) throw new InvalidValuesError('id', 'Invalid id value');
   }
 
   public toJSON() {

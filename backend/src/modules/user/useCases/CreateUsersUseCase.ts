@@ -1,4 +1,5 @@
 import { IUseCase } from '../../@shared/domain/UseCases/IUseCase';
+import { AlreadyExists } from '../../@shared/errors/AlreadyExists';
 import { CreateUserInput, CreateUserOutput } from '../DTOs/CreateUserDTO';
 import { User } from '../domain/entities/User';
 import { IUserRepository } from '../repositories/IUserRepository';
@@ -8,7 +9,7 @@ export class CreateUserUseCase implements IUseCase<CreateUserInput, Promise<Crea
 
   public async handler({ email, name, password }: CreateUserInput): Promise<CreateUserOutput> {
     const userAlreadyExists = await this.userRepository.findByEmail(email);
-    if (userAlreadyExists) throw new Error('User already exists error');
+    if (userAlreadyExists) throw new AlreadyExists('User already exists error');
     const newUser = new User({
       email,
       name,

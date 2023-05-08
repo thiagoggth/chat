@@ -1,6 +1,8 @@
 import { IUseCase } from '../../@shared/domain/UseCases/IUseCase';
+import { Email } from '../../user/domain/valueObjects/Email';
 import { IUserRepository } from '../../user/repositories/IUserRepository';
 import { LoginInput, LoginOutput, UserProtected } from '../DTOs/LoginDTOs';
+import { UserOrPasswordWrongError } from '../errors/UserOrPasswordWrogError';
 import { IAuthService } from '../services/IAuthService';
 
 export class LoginUseCase implements IUseCase<LoginInput, Promise<LoginOutput>> {
@@ -13,10 +15,11 @@ export class LoginUseCase implements IUseCase<LoginInput, Promise<LoginOutput>> 
   }
 
   public async handler(dto: LoginInput): Promise<LoginOutput> {
-    const userFound = await this.userRepository.findByEmail(dto.email);
+    const email = new Email(dto.email);
+    const userFound = await this.userRepository.findByEmail(email.value);
 
     if (!userFound || !userFound.password.checkPassword(dto.password)) {
-      throw new Error('User or password wrong');
+      throw new UserOrPasswordWrongError('email', 'User or password wrong');
     }
 
     const userProtected: UserProtected = {

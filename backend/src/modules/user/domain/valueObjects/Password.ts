@@ -1,4 +1,5 @@
 import IValueObject from '../../../@shared/domain/valueObjects/IValueObject';
+import { InvalidValuesError } from '../../../@shared/errors/InvalidValuesError';
 import { EncryptService } from '../../../auth/services/EncryptService';
 import { IEncryptService } from '../../../auth/services/IEncryptService';
 
@@ -22,21 +23,22 @@ export class Password implements IValueObject {
 
   private validateAreEmpty() {
     if (!this.value || this.value.trim().length === 0) {
-      throw new Error('Password should not be empty');
+      throw new InvalidValuesError('password', 'Password should not be empty');
     }
   }
 
   private validateMinCharacters() {
     const MINIMUM_LENGTH = 8;
     if (this.value.length < MINIMUM_LENGTH) {
-      throw new Error('Password must be at least 8 characters');
+      throw new InvalidValuesError('password', 'Password must be at least 8 characters');
     }
   }
 
   private validateRequiredCharacters() {
     const REQUIRED_CHARACTER_REGEX = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)/;
     if (!REQUIRED_CHARACTER_REGEX.test(this.value)) {
-      throw new Error(
+      throw new InvalidValuesError(
+        'password',
         'Password must include at least one uppercase letter, one lowercase letter, one number and one special character'
       );
     }

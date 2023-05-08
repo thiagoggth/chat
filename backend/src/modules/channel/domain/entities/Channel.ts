@@ -1,6 +1,7 @@
 import { BaseEntity, BaseEntityProps } from '../../../@shared/domain/entities/BaseEntity';
 import IAggregateRoot from '../../../@shared/domain/entities/IAggregateRoot';
 import { Id } from '../../../@shared/domain/valueObjects/Id';
+import { InvalidValuesError } from '../../../@shared/errors/InvalidValuesError';
 
 interface ChannelProps extends BaseEntityProps {
   name?: string;
@@ -37,21 +38,27 @@ export class Channel extends BaseEntity implements IAggregateRoot {
 
   private convertStringToType(channelTypeString: string): ChannelType {
     const hasValue = Object.values(ChannelType).includes(channelTypeString as any);
-    if (!hasValue) throw new Error('Invalid channel type');
+    if (!hasValue) throw new InvalidValuesError('type', 'Invalid channel type');
     return channelTypeString as ChannelType;
   }
 
   private validate() {
     if (this.type !== ChannelType.DIRECT && !this.name) {
-      throw new Error('name are required');
+      throw new InvalidValuesError('name', 'name are required');
     }
 
     if (this._membersIds.length < MINIMUM_CHANNEL_MEMBERS) {
-      throw new Error(`Channel must have at least ${MINIMUM_CHANNEL_MEMBERS} members`);
+      throw new InvalidValuesError(
+        'members',
+        `Channel must have at least ${MINIMUM_CHANNEL_MEMBERS} members`
+      );
     }
 
     if (this.type === ChannelType.DIRECT && this._membersIds.length > MAX_DIRECT_CHANNEL_MEMBERS) {
-      throw new Error(`Direct channel must have only ${MAX_DIRECT_CHANNEL_MEMBERS} members`);
+      throw new InvalidValuesError(
+        'members',
+        `Direct channel must have only ${MAX_DIRECT_CHANNEL_MEMBERS} members`
+      );
     }
 
     for (const [index, memberId] of this._membersIds.entries()) {
@@ -59,7 +66,8 @@ export class Channel extends BaseEntity implements IAggregateRoot {
         (memberIdFilter, indexFilter) =>
           indexFilter !== index && memberId.value === memberIdFilter.value
       );
-      if (duplicates?.length > 0) throw new Error(`members[${index}]: has duplicated`);
+      if (duplicates?.length > 0)
+        throw new InvalidValuesError(`members[${index}]`, `Has duplicated`);
     }
   }
 

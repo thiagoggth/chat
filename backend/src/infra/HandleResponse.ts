@@ -53,10 +53,10 @@ export abstract class HandleResponse {
     };
   }
 
-  public static unauthorized(): HttpResponse {
+  public static unauthorized(message = 'restricted access'): HttpResponse {
     return {
       status: HttpStatus.UNAUTHORIZED,
-      body: new Result(null, 'restricted access', false)
+      body: new Result(null, message, false)
     };
   }
 
