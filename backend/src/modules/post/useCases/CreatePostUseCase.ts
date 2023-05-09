@@ -1,5 +1,6 @@
 import { IUseCase } from '../../@shared/domain/UseCases/IUseCase';
 import { Id } from '../../@shared/domain/valueObjects/Id';
+import { NotFoundError } from '../../@shared/errors/NotFoundError';
 import { EventData, IEvent } from '../../@shared/services/IEvent';
 import { IChannelRepository } from '../../channel/repositories/IChannelRepository';
 import { IUserRepository } from '../../user/repositories/IUserRepository';
@@ -33,11 +34,11 @@ export class CreatePostUseCase implements IUseCase<CreatePostInput, Promise<Crea
 
   private async validateExistsChannel(id: Id): Promise<void> {
     const channelFound = await this.channelRepository.findById(id);
-    if (!channelFound) throw new Error('channel not found');
+    if (!channelFound) throw new NotFoundError('channelId', 'channel not found');
   }
 
   private async validateExistsUser(id: Id): Promise<void> {
     const userFound = await this.userRepository.findById(id);
-    if (!userFound) throw new Error('User not found');
+    if (!userFound) throw new NotFoundError('userId', 'User not found');
   }
 }
