@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { Application, json } from 'express';
 import http from 'http';
 import path from 'path';
@@ -79,6 +80,7 @@ export class App {
 
   private configRestMiddlewares() {
     this.app.use(json());
+    this.app.use(cors());
   }
 
   private configSocketEvents() {
