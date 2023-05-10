@@ -1,4 +1,5 @@
 'use client';
+import { ApiResponse } from '@/@types/apiTypes';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Input } from '@/components/Input';
@@ -7,15 +8,9 @@ import { ROUTES } from '@/constants/Routes';
 import api from '@/services/api';
 import notify from '@/services/notify';
 import { AxiosError } from 'axios';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-
-type ApiResponse<T = any> = {
-  data: T;
-  message: string;
-  success: boolean;
-  errors: { name: string; message: string }[];
-};
 
 interface CreateUserDto {
   name: string;
@@ -70,9 +65,16 @@ const Register = () => {
           name="password"
           placeholder="Digite sua senha"
         />
-        <Button type="submit" className="mt-4">
+        <Button type="submit" className="mt-4 w-full">
           Registrar
         </Button>
+        <p className="text-gray-600">
+          Já possui cadastro click{' '}
+          <Link className="text-purple-600" href={ROUTES.public.login}>
+            aqui
+          </Link>{' '}
+          para fazer login
+        </p>
       </form>
     </Card>
   );
