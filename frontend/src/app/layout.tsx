@@ -1,4 +1,6 @@
+import { PrivateRoute } from '@/components/PrivateRoute';
 import ToastCustom from '@/components/Toast';
+import { AuthProvider } from '@/contexts/AuthContext';
 import './globals.css';
 
 export const metadata = {
@@ -11,7 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-br">
       <body suppressHydrationWarning>
         <ToastCustom />
-        {children}
+        <AuthProvider>
+          <div className="bg-zinc-800 min-h-screen">
+            <PrivateRoute>{children}</PrivateRoute>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -5,7 +5,7 @@ import { Card } from '@/components/Card';
 import { Input } from '@/components/Input';
 import { Title } from '@/components/Title';
 import { ROUTES } from '@/constants/Routes';
-import api from '@/services/api';
+import { useAuth } from '@/contexts/AuthContext';
 import notify from '@/services/notify';
 import { AxiosError } from 'axios';
 import Link from 'next/link';
@@ -28,6 +28,7 @@ interface LoginUserDto {
 
 export default function Login() {
   // mandar para o back, tratar resposta e criar a pagina home
+  const { signIn } = useAuth();
   const [errorList, setErrorList] = useState<Record<string, string>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +37,7 @@ export default function Login() {
     e.preventDefault();
     const loginDto: LoginUserDto = { email, password };
     try {
-      const result = await api.post('/auth/login', loginDto);
+      await signIn(loginDto);
       // logica de login
     } catch (error: any) {
       if (!(error instanceof AxiosError)) throw error;
